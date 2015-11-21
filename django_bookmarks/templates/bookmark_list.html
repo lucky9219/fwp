@@ -1,0 +1,33 @@
+{% if bookmarks %}
+ 	<ul class=<"bookmarks">
+ 	{%for bookmark in bookmarks %}
+ 		<li>
+ 		<a href="{{bookmark.link.url|escape}}" class=
+ 		"title">{{bookmark.title|escape}}</a>
+ 		{% if show_edit %}
+ 			<a href="/save/?url={{bookmark.link.url|urlencode}}" class="edit">[edit]</a>
+ 		{%endif%}
+ 		<br>
+ 		{% if show_tags %}
+ 			Tags:
+ 			{% if bookmark.tag_set.all %}
+ 				<ul style="list-style-type:square" class="tags">
+ 				{% for tag in bookmark.tag_set.all%}
+ 					<li><a href="/tag/{{tag.name|urlencode}}/">{{tag.name|escape}}</a></li>
+ 				{% endfor %}
+ 				</ul>
+ 			{%else%}
+ 				NONE.
+ 			{%endif%}
+ 			{% if show_user %}
+ 				POSTED BY:	
+ 				<a href="/user/{{bookmark.user.username}}/">
+ 				{{bookmark.user.username}}</a>
+ 			{% endif %}
+ 		{%endif%}
+ 		</li>
+ 	{%endfor%}
+ 	</ul>
+ {%else%}
+ 	<p>No Bookmark found.</p>
+ {%endif%}
