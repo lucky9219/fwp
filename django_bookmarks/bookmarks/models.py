@@ -17,3 +17,12 @@ class Tag(models.Model):
 	bookmarks=models.ManyToManyField(bookmark)
 	def __str__(self):
 		return self.name
+
+class SharedBookmark(models.Model):
+	bookmark=models.OneToOneField(bookmark)
+	date=models.DateTimeField(auto_now_add=True)
+	votes=models.IntegerField(default=1)
+	users_voted=models.ManyToManyField(User)
+	def __str__(self):
+		return '%s,%s' %self.bookmark,self.votes
+		

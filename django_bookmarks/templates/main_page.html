@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Welcome to Movies Bookmarks{% endblock %}
-
 {% block head %}Welcome to Movies Bookmarks{% endblock %}
 
 {% block content %}
@@ -8,6 +7,8 @@
 {% if user.username %}
 	<p>Welcome {{user.username}}!!
 	<p>{{page_body}}</p>
+	<h2>Bookmarks shared by Users</h2>
+{%include 'shared_bookmark_list.html' %}
 {% else %}
 	<p>Welcome anonymous user!
 	You need to <a href="/login/">login</a> before you can store and share bookmarks</p>

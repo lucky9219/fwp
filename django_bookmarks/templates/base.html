@@ -16,7 +16,7 @@
     <meta name="author" content="">
 
     <title>Bookmarks Movies |{%block title%}{%endblock%}</title>
-
+{%block exterrnal%}{%endblock%}
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="{{LINK}}css/bootstrap.min.css" rel="stylesheet">
 
@@ -65,6 +65,7 @@
         <a href="/user/{{user.username}}/">{{user.username}}
         </a> 
         <a href="/save/">Save New</a> |
+         <a href="/search/">Search</a> |
         <a href="/logout">logout</a>
         {% else %}
         <a href="/login/">login</a> | 
@@ -319,11 +320,14 @@
 
     <!-- Contact Form JavaScript -->
     <script src="{{LINK}}js/jqBootstrapValidation.js"></script>
-    <script src="{{LINK}}js/contact_me.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="{{LINK}}js/freelancer.js"></script>
+    <script type="text/javascript" src="{{LINK}}/js/bookmark_edit.js"></script>
     <script type="text/javascript" src="{{LINK}}/js/search.js"></script>
+
+
+</body>
 </body>
 
 </html>
