@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^tag/$','bookmarks.views.tag_cloud_page'),
     url(r'^search/$','bookmarks.views.search_page'),
     url(r'^accounts/login/$','django.contrib.auth.views.login',),
+    url(r'^^vote/$', 'bookmarks.views.bookmark_vote_page'),
     ]

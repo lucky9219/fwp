@@ -175,3 +175,20 @@ def _bookmark_save(request, form):
   # Save bookmark to database and return it.
   bookmark1.save()
   return bookmark1
+
+@login_required
+def bookmark_vote_page(request):
+  if request.GET.has_key('id'):
+    try:
+      id=request.GET['id']
+      shared_bookmark=SharedBookmark.objects.get(id=id)
+      users_voted=shared_bookmark.users_voted.filter(username=request.user.username)
+      if not users_voted:
+        shared_bookmark.votes+=1
+        shared_bookmark.users_voted.add(request.user)
+        shared_bookmark.save()
+    except ObjectDoesNotExist:
+      raise Http404('Bookmark not found.')
+  if request.META.has_key('HTTP_REFERER'):
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+  return HttpResponseRedirect('/')
