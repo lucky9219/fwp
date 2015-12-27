@@ -23,6 +23,7 @@ urlpatterns = [
 #browsing
     url(r'^$','bookmarks.views.main_page'),
     url(r'^user/(\w+)/$','bookmarks.views.user_page',),
+    url(r'^popular/$','bookmarks.views.popular_page'),
 #session management    
     url(r'^login/$','django.contrib.auth.views.login',),
     url(r'^logout/$','bookmarks.views.logout_page',),
