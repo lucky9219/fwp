@@ -28,6 +28,21 @@
  		</li>
  	{%endfor%}
  	</ul>
+ 	 {% if show_paginator %}
+    <div class="paginator">
+     {% if bookmarks.has_previous %}
+            <a href="?page={{ bookmarks.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ bookmarks.number }} of {{ count }}
+        </span>
+
+        {% if bookmarks.has_next %}
+            <a href="?page={{ bookmarks.next_page_number }}">next</a>
+        {% endif %}
+    </div>
+  {% endif %}
  {%else%}
  	<p>No Bookmark found.</p>
  {%endif%}

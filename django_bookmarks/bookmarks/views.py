@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime,timedelta
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def main_page(request):
   shared_bookmarks = SharedBookmark.objects.order_by(
     '-date'
@@ -19,22 +20,32 @@ def main_page(request):
   return render_to_response('main_page.html', variables)
 
 def user_page(request,username):
-	user=get_object_or_404(User,username=username)
-	bookmarks=user.bookmark_set.order_by('-id')
-	var=RequestContext(request,{
+  user=get_object_or_404(User,username=username)
+  query_set=bookmark.objects.order_by('-id')
+  pag=Paginator(query_set,3)
+  page = request.GET.get('page')
+  try:
+    bookmarks = pag.page(page)
+  except PageNotAnInteger:
+    bookmarks = pag.page(1)
+  except EmptyPage:
+    bookmarks = pag.page(pag.num_pages)
+  var=RequestContext(request,{
 		'username':username,
 		'bookmarks':bookmarks,
 		'show_tags':True,
-		'show_edit':username==request.user.username
-		})
-	return render_to_response('user_page.html',var)
+		'show_edit':username==request.user.username,
+    'show_paginator':pag.num_pages>1,
+    'count':pag.num_pages,
+    })
+  return render_to_response('user_page.html',var)
 
 def logout_page(request):
 	logout(request)
 	return HttpResponseRedirect('/')
 
 def tag_page(request,tag_name):
-	tag=get_object_or_404(Tag,name=tag_name)
+	tag=get_object_or_404(Tag,name=tag_nfame)
 	bookmarks=tag.bookmarks.order_by('-id')
 	var=RequestContext(request,{
 

@@ -16,7 +16,12 @@ Including another URLconf
 from django.views.generic import TemplateView
 from django.conf.urls import include, url
 from django.contrib import admin
+from bookmarks.feeds import *
+
+
+
 import os.path
+feeds={'recent':RecentBookmarks}
 urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
@@ -36,4 +41,4 @@ urlpatterns = [
     url(r'^search/$','bookmarks.views.search_page'),
     url(r'^accounts/login/$','django.contrib.auth.views.login',),
     url(r'^^vote/$', 'bookmarks.views.bookmark_vote_page'),
-    ]
+]
