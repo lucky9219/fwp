@@ -31,7 +31,7 @@
  	 {% if show_paginator %}
     <div class="paginator">
      {% if bookmarks.has_previous %}
-            <a href="?page={{ bookmarks.previous_page_number }}">previous</a>
+            <a href="?page={{ bookmarks.previous_page_number }}">&laquo;</a>
         {% endif %}
 
         <span class="current">
@@ -39,7 +39,7 @@
         </span>
 
         {% if bookmarks.has_next %}
-            <a href="?page={{ bookmarks.next_page_number }}">next</a>
+            <a href="?page={{ bookmarks.next_page_number }}"> &raquo;</a>
         {% endif %}
     </div>
   {% endif %}

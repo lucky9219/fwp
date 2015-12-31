@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{%block title%}Friends For {{username}}{%endblock%}
+{%block head%}Frinds For {{username}}{%endblock%}
+{%block content%}
+<h2>Friend list</h2>
+{%if friends%}
+	<ul class="friends">
+	{%for friend in friends %}
+	 <li><a href="/user/{{friend.username}}/">{{friend.username}}</a></li>
+	{%endfor%}
+	</ul>
+{%else%}
+	<p>No Friends</p>
+{%endif%}
+<a href="/friend/invite/">Invite a friend!</a>
+  <h2>Latest Friend Bookmarks</h2>
+<h2>Latest Friend Bookmark</h2>
+{%include 'bookmark_list.html'%}
+{%endblock%} 

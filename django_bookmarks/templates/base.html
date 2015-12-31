@@ -63,7 +63,8 @@
         <a href="/">home</a> | 
         {% if user.is_authenticated %}
         <a href="/user/{{user.username}}/">{{user.username}}
-        </a> 
+        </a> |
+        <a href="/friends/{{user}}/">Friends</a> |
         <a href="/save/">Save New</a> |
          <a href="/search/">Search</a> |
         <a href="/logout">logout</a>

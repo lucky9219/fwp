@@ -10,10 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)'moviemania766@gmail.com''django@lucky'
 import os
 import os.path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -99,6 +101,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'moviemania766@gmail.com'
+EMAIL_HOST_PASSWORD = 'Django92lucky'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = \
+'moviemania766 <django.moviemania766@gmail.com>'
+SITE_HOST='127.0.0.1:8000'
 import django.contrib.auth
 STATIC_URL = "/static/"
 STATICFILES_DIRS=[BASE_DIR+"/static/"]

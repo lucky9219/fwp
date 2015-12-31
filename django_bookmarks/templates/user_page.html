@@ -2,5 +2,16 @@
 {% block title %}{{username}}{% endblock %}
 {% block head %}Bookmarks for {{username}}{%endblock%}
 {% block content %}
+{%ifequal user.username username %}
+	<a href="/friends/{{username}}">View your Friend</a>
+{%else%}
+	{%if is_friend %}
+	<a href="/friends/{{user.username}}">{{username}} is a friend of yours</a>
+{%else%}
+	<a href="/friend/add/?username={{username}}">add {{username}} to your friend list</a>
+{% endif %}
+<a href="/friends/{{username}}/"><br>
+view {{username}}'s friends</a>
+{% endifequal %}
 {% include "bookmark_list.html" %}
 {% endblock %}

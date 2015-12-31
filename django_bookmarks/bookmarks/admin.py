@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Link,Tag,bookmark,SharedBookmark
+from .models import *
 
 
 class BookmarkAdmin(admin.ModelAdmin):
@@ -19,8 +19,18 @@ class SharedBookmarkAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
 	list_display=['name']
 	search_fields=['name']
+class FriendshipAdmin(admin.ModelAdmin):
+	list_display=['from_friend','to_friend']
+	search_fields=['from_friend']
+class InvitationAdmin(admin.ModelAdmin):
+	list_display=['name']
+	search_fields=['name']
+
+
+admin.site.register(Invitation,InvitationAdmin)
+admin.site.register(Friendship,FriendshipAdmin)
 admin.site.register(Link,LinkAdmin)
 admin.site.register(Tag,TagAdmin)
 admin.site.register(bookmark,BookmarkAdmin)
 admin.site.register(SharedBookmark,SharedBookmarkAdmin)
-# Register your models here.
+

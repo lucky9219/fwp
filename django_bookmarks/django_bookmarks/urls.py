@@ -19,7 +19,6 @@ from django.contrib import admin
 from bookmarks.feeds import *
 
 
-
 import os.path
 feeds={'recent':RecentBookmarks}
 urlpatterns = [
@@ -40,5 +39,9 @@ urlpatterns = [
     url(r'^tag/$','bookmarks.views.tag_cloud_page'),
     url(r'^search/$','bookmarks.views.search_page'),
     url(r'^accounts/login/$','django.contrib.auth.views.login',),
-    url(r'^^vote/$', 'bookmarks.views.bookmark_vote_page'),
+    url(r'^vote/$', 'bookmarks.views.bookmark_vote_page'),
+    url(r'^friends/(\w+)/$','bookmarks.views.friends_page'),
+    url(r'^friend/add/$','bookmarks.views.friend_add'),
+    url(r'^friend/invite/$','bookmarks.views.friend_invite'),
+    url(r'^friend/accept/(\w+)/$','bookmarks.views.friend_accept'),
 ]

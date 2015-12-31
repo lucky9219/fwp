@@ -24,6 +24,9 @@ def user_page(request,username):
   query_set=bookmark.objects.order_by('-id')
   pag=Paginator(query_set,3)
   page = request.GET.get('page')
+  is_friend=Friendship.objects.filter(
+    from_friend=request.user,
+    to_friend=user)
   try:
     bookmarks = pag.page(page)
   except PageNotAnInteger:
@@ -37,6 +40,7 @@ def user_page(request,username):
 		'show_edit':username==request.user.username,
     'show_paginator':pag.num_pages>1,
     'count':pag.num_pages,
+    'is_friend':is_friend
     })
   return render_to_response('user_page.html',var)
 
@@ -56,22 +60,42 @@ def tag_page(request,tag_name):
 		})
 	return render_to_response('tag_page.html',var)
 
+[ 203 ]
 def register_page(request):
-	if request.method=='POST':
-		form=RegistrationForm(request.POST)
-		if form.is_valid():
-			user=User.objects.create_user(
-				username=form.cleaned_data['username'],
-				password=form.cleaned_data['password1'],
-				email=form.cleaned_data['email']
-				)
-			return HttpResponseRedirect('/register/success/')
-	else:
-		form=RegistrationForm()
-	variables=RequestContext(request,{'form':form})
-	return render_to_response(
-			'registration/register.html',variables)
-
+  if request.method == 'POST':
+    form = RegistrationForm(request.POST)
+    if form.is_valid():
+      user = User.objects.create_user(
+        username=form.cleaned_data['username'],
+        password=form.cleaned_data['password1'],
+        email=form.cleaned_data['email']
+      )
+      if 'invitation' in request.session:
+        # Retrieve the invitation object.
+        invitation = \
+          Invitation.objects.get(id=request.session['invitation'])
+        # Create friendship from user to sender.
+        friendship = Friendship(
+          from_friend=user,
+          to_friend=invitation.sender
+        )
+        friendship.save()
+        # Create friendship from sender to user.
+        friendship = Friendship (
+          from_friend=invitation.sender,
+          to_friend=user
+        )
+        friendship.save()
+        # Delete the invitation from the database and session.
+        invitation.delete()
+        del request.session['invitation']
+      return HttpResponseRedirect('/register/success/')
+  else:
+    form = RegistrationForm()
+  variables = RequestContext(request, {
+    'form': form
+  })
+  return render_to_response('registration/register.html', variables)
 
 @login_required 
 def bookmark_save_page(request):
@@ -217,3 +241,53 @@ def popular_page(request):
     'shared_bookmarks': shared_bookmarks
   }) 
   return render_to_response('popular_page.html', variables)
+
+def friends_page(request,username):
+  user=get_object_or_404(User,username=username)
+  friends= \
+  [friendship.to_friend for friendship in user.friend_set.all()]
+  friend_bookmarks = \
+    bookmark.objects.filter(user__in=friends).order_by('-id')
+  variables=RequestContext(request, {
+    'username':username,
+    'friends':friends,
+    'bookmarks':friend_bookmarks,
+    'show_tags':True,
+    'show_user':True
+    })
+  return render_to_response('friends_page.html',variables)
+@login_required
+def friend_add(request):
+  if request.GET.has_key('username'):
+    friend=get_object_or_404(User,username=request.GET['username'])
+    friendship=Friendship(from_friend=request.user,
+      to_friend=friend)
+    friendship.save()
+    return HttpResponseRedirect('/friends/%s'% request.user.username)
+  else:
+    pass  
+@login_required
+def friend_invite(request):
+  if request.method == 'POST':
+    form = FriendInviteForm(request.POST)
+    if form.is_valid():
+      invitation = Invitation(
+        name = form.cleaned_data['name'],
+        email = form.cleaned_data['email'],
+        code = User.objects.make_random_password(20),
+        sender = request.user
+      )
+      invitation.save()
+      invitation.send()
+      return HttpResponseRedirect('/friend/invite/')
+  else:
+    form = FriendInviteForm()
+  variables = RequestContext(request, {
+    'form': form
+  })
+  return render_to_response('friend_invite.html', variables)
+
+def friend_accept(request,code):
+  invitation=get_object_or_404(Invitation,code=code)
+  request.session['invitation']=invitation.id
+  return HttpResponseRedirect('/register/')
