@@ -86,7 +86,7 @@ header {
 }
 
 header .container {
-    padding-top: 100px;
+    padding-top: 200px;
     padding-bottom: 50px;
 }
 
@@ -100,7 +100,7 @@ header .intro-text .name {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 2em;
-    font-weight: 700;
+    font-weight: 550;
 }
 
 header .intro-text .skills {
@@ -476,3 +476,18 @@ ul.bookmarks .edit{
     font-size:70%;
 }
 
+
+ul.messages {
+  border: 1px dashed #000;
+  margin: 1em 4em;
+  padding: 1em;
+}
+
+
+#abc {
+    text-align: left;
+    font-size: 50%;
+}
+#frnd_invite{
+    font-size:80%;
+}

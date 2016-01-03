@@ -2,6 +2,9 @@
 {%block title%}Friends For {{username}}{%endblock%}
 {%block head%}Frinds For {{username}}{%endblock%}
 {%block content%}
+<div id="abc">
+<a href="/friend/invite/">Click Here To Invite A Friend!</a>
+  </div>
 <h2>Friend list</h2>
 {%if friends%}
 	<ul class="friends">
@@ -12,8 +15,7 @@
 {%else%}
 	<p>No Friends</p>
 {%endif%}
-<a href="/friend/invite/">Invite a friend!</a>
-  <h2>Latest Friend Bookmarks</h2>
-<h2>Latest Friend Bookmark</h2>
+
+  <h3>Latest Friend Bookmarks</h3>
 {%include 'bookmark_list.html'%}
 {%endblock%} 

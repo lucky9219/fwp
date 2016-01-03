@@ -3,7 +3,9 @@
 {% block head %}Bookmarks for {{username}}{%endblock%}
 {% block content %}
 {%ifequal user.username username %}
-	<a href="/friends/{{username}}">View your Friend</a>
+<div id="abc">	
+<a href="/friends/{{username}}">click to view your Friend List</a>
+</div>
 {%else%}
 	{%if is_friend %}
 	<a href="/friends/{{user.username}}">{{username}} is a friend of yours</a>

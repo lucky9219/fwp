@@ -2,11 +2,12 @@
 {% block title %}Invite A Friend{% endblock %}
 {% block head %}Invite A Friend{% endblock %}
 {% block content %}
-Enter your friend name and email below,  
-     and click "send invite" to invite your friend to join the site:
+<div id="frnd_invite">
+Enter your friend name and email below to send the invitation
+</div>
 <form method="post" action=".">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value="send invite" />
+  <input type="submit" value="send" />
 </form>
 {% endblock %}

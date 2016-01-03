@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime,timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 def main_page(request):
   shared_bookmarks = SharedBookmark.objects.order_by(
     '-date'
@@ -278,7 +279,11 @@ def friend_invite(request):
         sender = request.user
       )
       invitation.save()
-      invitation.send()
+      try:
+        invitation.send()
+        messages.add_message(request, messages.INFO, "Invitation successfully sent")
+      except:
+        messages.add_message(request, messages.INFO, "Invitation not send successfully.Try again later")
       return HttpResponseRedirect('/friend/invite/')
   else:
     form = FriendInviteForm()
